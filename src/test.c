@@ -30,6 +30,17 @@ int areSame(matrix A, matrix B)
     return 1; 
 }
 
+void display_matrix(matrix a)
+{
+    for (int i = 0; i < a.rows; i++) {
+        for (int j = 0; j < a.cols; j++) {
+            printf("%f     ", a.data[i*a.cols + j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
 void test_matrix_speed()
 {
     int i;
@@ -68,10 +79,50 @@ void test_matrix_copy()
         printf("Matrices are not identical\n"); 
 }
 
+void test_matrix_transpose()
+{
+    matrix a = random_matrix(3, 3, 1);
+    matrix b = transpose_matrix(a);
+    
+    // Test for shape
+    printf("a.shape = (%d, %d)\n", a.rows, a.cols);
+    printf("b.shape = (%d, %d)\n", b.rows, b.cols);
+    if ((a.rows == b.cols) && (a.cols == b.rows))
+        printf("Transpose shape correct\n");
+    else
+        printf("Transpose shape incorrect\n");
+
+    // Test for same data
+    matrix bt = transpose_matrix(b);
+    if (areSame(a, bt))
+        printf("Matrices are identical\n");
+    else
+        printf("Matrices are not identical\n");
+
+    // Show matrices
+    display_matrix(a);
+    display_matrix(b);
+    display_matrix(bt);
+}
+
+// void transpose_matrix2()
+// {
+//     matrix m = random_matrix(2, 3, 1);
+//     display_matrix(m);
+//     for ( int i = 0; i < m.cols; i++ ) {
+//         for ( int j = 0; j < m.rows; j++ ) {
+//             printf("%f     ", m.data[j * m.cols + i]);
+//         }
+//         printf("\n");
+//     }
+// }
+
 void run_tests()
 {
+    // transpose_matrix2();
     test_matrix_speed();
     test_matrix_copy();
+    test_matrix_transpose();
     //printf("%d tests, %d passed, %d failed\n", tests_total, tests_total-tests_fail, tests_fail);
 }
 

@@ -68,9 +68,9 @@ matrix transpose_matrix(matrix m)
 {
     // TODO: 1.2 - Make a matrix the correct size, fill it in
     matrix t = make_matrix(m.cols, m.rows);
-    for ( int i = 0; i < m.cols; i++ ) {
-        for ( int j = 0; j < m.rows; j++ ) {
-            t.data[j * m.cols + i] = m.data[j * m.cols + i];
+    for ( int i = 0; i < t.rows; i++ ) {
+        for ( int j = 0; j < t.cols; j++ ) {
+            t.data[i * t.cols + j] = m.data[j * m.cols + i];
         }
     }
 
