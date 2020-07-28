@@ -52,7 +52,11 @@ matrix copy_matrix(matrix m)
 {
     matrix c = make_matrix(m.rows, m.cols);
     // TODO: 1.1 - Fill in the new matrix
-
+    for ( int i = 0; i < m.rows; i++ ) {
+        for ( int j = 0; j < m.cols; j++ ) {
+            c.data[i*c.cols + j] = m.data[i*m.cols + j];
+        }
+    }
 
     return c;
 }
@@ -63,8 +67,12 @@ matrix copy_matrix(matrix m)
 matrix transpose_matrix(matrix m)
 {
     // TODO: 1.2 - Make a matrix the correct size, fill it in
-    matrix t = make_matrix(1,1);
-
+    matrix t = make_matrix(m.cols, m.rows);
+    for ( int i = 0; i < m.cols; i++ ) {
+        for ( int j = 0; j < m.rows; j++ ) {
+            t.data[j * m.cols + i] = m.data[j * m.cols + i];
+        }
+    }
 
     return t;
 }
