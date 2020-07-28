@@ -94,11 +94,23 @@ void test_matrix_transpose()
     print_matrix(bt);
 }
 
+void test_matrix_axpy()
+{
+    matrix a = random_matrix(3, 3, 1);
+    matrix b = random_matrix(3, 3, 1);
+    int x = 2;
+    print_matrix(a);
+    print_matrix(b);
+    axpy_matrix(x, a, b);
+    print_matrix(b);
+}
+
 void run_tests()
 {
     test_matrix_speed();
     test_matrix_copy();
     test_matrix_transpose();
+    test_matrix_axpy();
     //printf("%d tests, %d passed, %d failed\n", tests_total, tests_total-tests_fail, tests_fail);
 }
 
