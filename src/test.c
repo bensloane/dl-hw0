@@ -18,6 +18,18 @@ double what_time_is_it_now()
     return (double)time.tv_sec + (double)time.tv_usec * .000001;
 }
 
+// This function returns 1 if A[][] and B[][] are identical 
+// otherwise returns 0 
+int areSame(matrix A, matrix B) 
+{ 
+    int i, j; 
+    for (i = 0; i < A.rows; i++) 
+        for (j = 0; j < A.cols; j++) 
+            if (A.data[i*A.cols + j] != B.data[i*B.cols + j]) 
+                return 0; 
+    return 1; 
+}
+
 void test_matrix_speed()
 {
     int i;
@@ -38,9 +50,28 @@ void test_matrix_speed()
     printf("Transpose elapsed %lf sec\n", what_time_is_it_now() - start);
 }
 
+void test_matrix_copy()
+{
+    matrix a = random_matrix(512, 512, 1);
+    matrix b = copy_matrix(a);
+    
+    // Test for same shape
+    if ((a.rows == b.rows) && (a.cols == b.cols))
+        printf("Matrices have same shape\n");
+    else
+        printf("Matrices do NOT have same shape\n");
+
+    // Test for same data
+    if (areSame(a, b)) 
+        printf("Matrices are identical\n");
+    else
+        printf("Matrices are not identical\n"); 
+}
+
 void run_tests()
 {
     test_matrix_speed();
+    test_matrix_copy();
     //printf("%d tests, %d passed, %d failed\n", tests_total, tests_total-tests_fail, tests_fail);
 }
 
