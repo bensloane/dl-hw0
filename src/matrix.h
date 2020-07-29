@@ -62,6 +62,12 @@ void scal_matrix(float s, matrix m);
 // Print a matrix
 void print_matrix(matrix m);
 
+// Print a matrix to eaisly copy into np.array()
+void print_numpy_matrix(matrix m);
+
+matrix matmul_slow(matrix a, matrix b);
+
+
 // You won't need these
 matrix solve_system(matrix M, matrix b);
 matrix matrix_invert(matrix m);

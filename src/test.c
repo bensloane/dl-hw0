@@ -30,26 +30,6 @@ int areSame(matrix A, matrix B)
     return 1; 
 }
 
-void test_matrix_speed()
-{
-    int i;
-    int n = 128;
-    matrix a = random_matrix(512, 512, 1);
-    matrix b = random_matrix(512, 512, 1);
-    double start = what_time_is_it_now();
-    for(i = 0; i < n; ++i){
-        matrix d = matmul(a,b);
-        free_matrix(d);
-    }
-    printf("Matmul elapsed %lf sec\n", what_time_is_it_now() - start);
-    start = what_time_is_it_now();
-    for(i = 0; i < n; ++i){
-        matrix at = transpose_matrix(a);
-        free_matrix(at);
-    }
-    printf("Transpose elapsed %lf sec\n", what_time_is_it_now() - start);
-}
-
 void test_matrix_copy()
 {
     matrix a = random_matrix(512, 512, 1);
@@ -105,12 +85,81 @@ void test_matrix_axpy()
     print_matrix(b);
 }
 
+void test_matmul()
+{
+    matrix a = random_matrix(3, 3, 1);
+    matrix b = random_matrix(3, 3, 1);
+    matrix c = matmul(a, b);
+    
+    // Test for shape
+    if ((c.rows == a.rows) && (c.cols == b.cols))
+        printf("Transpose shape correct\n");
+    else
+        printf("Transpose shape incorrect\n");
+
+    // Show matrices
+    print_matrix(a);
+    print_matrix(b);
+    print_matrix(c);
+
+    // For numpy
+    print_numpy_matrix(a);
+    print_numpy_matrix(b);
+}
+
+void test_matrix_speed()
+{
+    int i;
+    int n = 128;
+    matrix a = random_matrix(512, 512, 1);
+    matrix b = random_matrix(512, 512, 1);
+    double start = what_time_is_it_now();
+    for(i = 0; i < n; ++i){
+        matrix d = matmul(a,b);
+        free_matrix(d);
+    }
+    printf("Matmul elapsed %lf sec\n", what_time_is_it_now() - start);
+
+    // double start2 = what_time_is_it_now();
+    // for(i = 0; i < n; ++i){
+    //     matrix d2 = matmul_slow(a,b);
+    //     free_matrix(d2);
+    // }
+    // printf("Matmul elapsed %lf sec\n", what_time_is_it_now() - start2);
+
+    start = what_time_is_it_now();
+    for(i = 0; i < n; ++i){
+        matrix at = transpose_matrix(a);
+        free_matrix(at);
+    }
+    printf("Transpose elapsed %lf sec\n", what_time_is_it_now() - start);
+}
+
 void run_tests()
 {
-    test_matrix_speed();
+    printf("--------------------Testing copy_matrix()--------------------\n");
     test_matrix_copy();
+    printf("-------------------------------------------------------------\n");
+    printf("\n");
+    
+    printf("------------------Testing transpose_matrix()------------------\n");
     test_matrix_transpose();
+    printf("-------------------------------------------------------------\n");
+    printf("\n");
+
+    printf("--------------------Testing axpy_matrix()--------------------\n");
     test_matrix_axpy();
-    //printf("%d tests, %d passed, %d failed\n", tests_total, tests_total-tests_fail, tests_fail);
+    printf("-------------------------------------------------------------\n");
+    printf("\n");
+
+    printf("-----------------------Testing matmul()----------------------\n");
+    test_matmul();
+    printf("-------------------------------------------------------------\n");
+    printf("\n");
+
+    printf("--------------------Testing matmul() speed-------------------\n");
+    test_matrix_speed();
+    printf("-------------------------------------------------------------\n");
+    printf("\n");
 }
 

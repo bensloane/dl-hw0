@@ -101,11 +101,44 @@ matrix matmul(matrix a, matrix b)
 {
     matrix c = make_matrix(a.rows, b.cols);
     // TODO: 1.4 - Implement matrix multiplication. Make sure it's fast!
-
-
+    // Iterate over rows of a
+    for ( int i = 0; i < a.rows; i++ ) {
+        // iterate over rows of y
+        for ( int k = 0; k < b.rows; k++ ) {
+            // iterate over columns of y
+            for ( int j = 0; j < b.cols; j++ ) {
+                c.data[i * b.cols + j] += a.data[i * a.cols + k] * b.data[k * b.cols + j];
+            }
+        }
+    }   
 
     return c;
 }
+
+// Perform matrix multiplication a*b, return result
+// matrix a,b: operands
+// returns: new matrix that is the result
+matrix matmul_slow(matrix a, matrix b)
+{
+    float sum = 0;
+    matrix c = make_matrix(a.rows, b.cols);
+    // TODO: 1.4 - Implement matrix multiplication. Make sure it's fast!
+    // Iterate over rows of a
+    for ( int i = 0; i < a.rows; i++ ) {
+        // iterate over rows of y
+        for ( int j = 0; j < b.rows; j++ ) {
+            sum = 0;
+            // iterate over cols of y
+            for ( int k = 0; k < b.cols; k++ ) {
+                sum += a.data[i * a.cols + k] * b.data[k * b.cols + j];
+            }
+            c.data[i * b.cols + j] = sum;
+        }
+    }   
+
+    return c;
+}
+
 
 // In-place, element-wise scaling of matrix
 // float s: scaling factor
@@ -142,6 +175,29 @@ void print_matrix(matrix m)
     printf("|__");
     for(j = 0; j < 16*m.cols-1; ++j) printf(" ");
     printf("__|\n");
+}
+
+void print_numpy_matrix(matrix m)
+{
+    printf("[");
+    for (int i = 0; i < m.rows; i++) {
+        printf("[");
+        for (int j = 0; j < m.cols; j++) {
+            if (j != m.cols - 1) {
+                printf("%f,", m.data[i*m.cols + j]);
+            }
+            else {
+                printf("%f", m.data[i*m.cols + j]);
+            }
+        }
+        if (i != m.rows - 1) {
+            printf("], ");
+        }
+        else {
+            printf("]");
+        }
+    }
+    printf("]\n");
 }
 
 // Used for matrix inversion
